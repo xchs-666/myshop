@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}支付订单 #{{ order.id }} — 我的商店{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'orders:detail' order.id %}">订单 #{{ order.id }}</a></li>
+                <li class="breadcrumb-item active">支付</li>
+            </ol>
+        </nav>
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="bi bi-credit-card"></i> 订单支付</h5>
+            </div>
+            <div class="card-body text-center py-5">
+                <h3 class="mb-3">应付金额</h3>
+                <p class="display-4 fw-bold text-danger mb-4">¥{{ order.get_total_cost }}</p>
+
+                <div class="border rounded p-4 mb-4 bg-light">
+                    <h5 class="mb-3">选择支付方式</h5>
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <label class="btn btn-outline-success active" style="min-width: 120px;">
+                            <input type="radio" name="method" checked> 💚 微信支付
+                        </label>
+                        <label class="btn btn-outline-primary" style="min-width: 120px;">
+                            <input type="radio" name="method"> 💙 支付宝
+                        </label>
+                        <label class="btn btn-outline-dark" style="min-width: 120px;">
+                            <input type="radio" name="method"> 🏦 银行卡
+                        </label>
+                    </div>
+                </div>
+
+                <form method="post" action="{% url 'orders:pay_process' order.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-lg px-5 py-3 w-100">
+                        <i class="bi bi-check-circle"></i> 确认支付 ¥{{ order.get_total_cost }}
+                    </button>
+                </form>
+            </div>
+
+            <div class="card-footer text-muted text-center small">
+                <i class="bi bi-shield-check"></i> 这是模拟支付，不会产生真实交易
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_head %}
+<style>.breadcrumb a { color: #0d6efd; text-decoration: none; }</style>
+{% endblock %}
