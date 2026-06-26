@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}提交订单 — 我的商店{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">提交订单</h1>
+
+<div class="row g-4">
+    {# 左侧：订单商品确认 #}
+    <div class="col-lg-5 order-lg-2">
+        <div class="card shadow-sm">
+            <div class="card-header bg-dark text-white">
+                <h5 class="mb-0">商品清单</h5>
+            </div>
+            <div class="card-body">
+                {% for item in cart %}
+                <div class="d-flex justify-content-between py-2 border-bottom">
+                    <span>{{ item.product.name }} <small class="text-muted">× {{ item.quantity }}</small></span>
+                    <span class="text-danger">¥{{ item.total_price }}</span>
+                </div>
+                {% endfor %}
+                <div class="d-flex justify-content-between pt-3 fw-bold fs-5">
+                    <span>合计</span>
+                    <span class="text-danger">¥{{ cart.get_total_price }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# 右侧：收货信息 #}
+    <div class="col-lg-7 order-lg-1">
+        <div class="card shadow-sm">
+            <div class="card-header bg-dark text-white">
+                <h5 class="mb-0">收货信息</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="name" class="form-label fw-bold">收货人</label>
+                        <input type="text" name="name" id="name" class="form-control" required
+                               placeholder="请输入收货人姓名">
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label fw-bold">联系电话</label>
+                        <input type="text" name="phone" id="phone" class="form-control" required
+                               placeholder="请输入联系电话">
+                    </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label fw-bold">收货地址</label>
+                        <textarea name="address" id="address" rows="3" class="form-control" required
+                                  placeholder="请输入详细收货地址"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-danger btn-lg w-100">
+                        <i class="bi bi-check-circle"></i> 确认下单 ¥{{ cart.get_total_price }}
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
