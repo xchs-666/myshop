@@ -1,0 +1,87 @@
+==================================================
+      我的电商网站 — 操作指南
+==================================================
+
+一、在本地电脑运行网站（看效果）
+--------------------------------------------------
+
+1. 打开 PowerShell（在桌面按 Win+R，输入 powershell，回车）
+
+2. 依次输入下面两条命令：
+
+   cd E:\myshop
+
+   venv\Scripts\python.exe manage.py runserver
+
+3. 看到 "Starting development server" 就说明成功了
+
+4. 打开浏览器，地址栏输入：127.0.0.1:8000
+
+5. 要停止的话，在 PowerShell 里按 Ctrl+C
+
+
+二、改代码
+--------------------------------------------------
+
+用 PyCharm 打开 E:\myshop 这个文件夹，想改哪个文件就双击打开。
+
+改完保存，切回浏览器刷新页面就能看到效果。
+
+最常改的文件：
+  - templates/base.html         改导航栏、网站名字
+  - templates/products/list.html 改商品列表页外观
+  - myshop/settings.py           改网站设置
+
+
+三、把修改更新到公网（让全世界看到）
+--------------------------------------------------
+
+做完第二步、确认本地没问题之后：
+
+1. 打开 PowerShell
+
+2. 依次输入：
+
+   cd E:\myshop
+
+   git add .
+
+   git commit -m "描述你改了什么"
+
+   git push origin main
+
+3. 打开浏览器，登录 pythonanywhere.com
+
+4. 点顶部的 Consoles → 点你之前创建的那个 Bash（或者新建一个）
+
+5. 在黑色窗口里输入：
+
+   cd ~/myshop && git pull
+
+6. 点顶部的 Web → 点绿色 Reload 按钮
+
+7. 刷新你的网站 xchs.pythonanywhere.com，改动就上线了
+
+
+四、添加新商品
+--------------------------------------------------
+
+方法一：后台添加（推荐）
+  1. 打开 xchs.pythonanywhere.com/admin/
+  2. 用 admin / admin123 登录
+  3. 点「商品」→ 右上角「增加 商品」
+  4. 填好信息，点保存
+
+方法二：本地添加后推送
+  1. 用 PyCharm 打开 seed_data.py
+  2. 模仿已有的格式加新的商品
+  3. 运行：venv\Scripts\python.exe seed_data.py
+  4. 做第三步的推送流程
+
+
+五、管理员账号
+--------------------------------------------------
+
+后台地址：xchs.pythonanywhere.com/admin/
+用户名：admin
+密码：admin123
